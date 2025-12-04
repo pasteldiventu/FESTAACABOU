@@ -1,0 +1,231 @@
+<body>
+    <header>
+        <h1>Confirme sua presença na maior festa da cidade!!</h1>
+        </h2>escolha seu personagem sabiamente, não vale pegar o que alguem ja pegou hein -Jp</h2>
+    </header>
+    <main id="character-selection">
+        <!-- Os cards dos personagens serão gerados aqui -->
+        <div class="character-card" data-id="1">
+            <h2>Personagem 1</h2>
+            <img src="imgs/personagem1.jpg" alt="Personagem 1">
+            <h3>Nome do Personagem 1</h3>
+            <p>Uma breve descrição do Personagem 1.</p>
+            <button class="choose-button" data-pdf="fichas/ficha_personagem1.pdf">Escolher</button>
+        </div>
+        <div class="character-card" data-id="2">
+            <h2>Personagem 2</h2>
+            <img src="imgs/personagem2.jpg" alt="Personagem 2">
+            <h3>Nome do Personagem 2</h3>
+            <p>Uma breve descrição do Personagem 2.</p>
+            <button class="choose-button" data-pdf="fichas/ficha_personagem2.pdf">Escolher</button>
+        </div>
+        <div class="character-card" data-id="3">
+            <h2>Personagem 3</h2>
+            <img src="imgs/personagem3.jpg" alt="Personagem 3">
+            <h3>Nome do Personagem 3</h3>
+            <p>Uma breve descrição do Personagem 3.</p>
+            <button class="choose-button" data-pdf="fichas/ficha_personagem3.pdf">Escolher</button>
+        </div>
+        <div class="character-card" data-id="4">
+            <h2>Personagem 4</h2>
+            <img src="imgs/personagem4.jpg" alt="Personagem 4">
+            <h3>Nome do Personagem 4</h3>
+            <p>Uma breve descrição do Personagem 4.</p>
+            <button class="choose-button" data-pdf="fichas/ficha_personagem4.pdf">Escolher</button>
+        </div>
+        <div class="character-card" data-id="5">
+            <h2>Personagem 5</h2>
+            <img src="imgs/personagem5.jpg" alt="Personagem 5">
+            <h3>Nome do Personagem 5</h3>
+            <p>Uma breve descrição do Personagem 5.</p>
+            <button class="choose-button" data-pdf="fichas/ficha_personagem5.pdf">Escolher</button>
+        </div>
+        <div class="character-card" data-id="6">
+            <h2>Personagem 6</h2>
+            <img src="imgs/personagem6.jpg" alt="Personagem 6">
+            <h3>Nome do Personagem 6</h3>
+            <p>Uma breve descrição do Personagem 6.</p>
+            <button class="choose-button" data-pdf="fichas/ficha_personagem6.pdf">Escolher</button>
+        </div>
+        <div class="character-card" data-id="7">
+            <h2>Personagem 7</h2>
+            <img src="imgs/personagem7.jpg" alt="Personagem 7">
+            <h3>Nome do Personagem 7</h3>
+            <p>Uma breve descrição do Personagem 7.</p>
+            <button class="choose-button" data-pdf="fichas/ficha_personagem7.pdf">Escolher</button>
+        </div>
+        <div class="character-card" data-id="8">
+            <h2>Personagem 8</h2>
+            <img src="imgs/personagem8.jpg" alt="Personagem 8">
+            <h3>Nome do Personagem 8</h3>
+            <p>Uma breve descrição do Personagem 8.</p>
+            <button class="choose-button" data-pdf="fichas/ficha_personagem8.pdf">Escolher</button>
+        </div>
+        <div class="character-card" data-id="9">
+            <h2>Personagem 9</h2>
+            <img src="imgs/personagem9.jpg" alt="Personagem 9">
+            <h3>Nome do Personagem 9</h3>
+            <p>Uma breve descrição do Personagem 9.</p>
+            <button class="choose-button" data-pdf="fichas/ficha_personagem9.pdf">Escolher</button>
+        </div>
+        <div class="character-card" data-id="10">
+            <h2>Personagem 10</h2>
+            <img src="imgs/personagem10.jpg" alt="Personagem 10">
+            <h3>Nome do Personagem 10</h3>
+            <p>Uma breve descrição do Personagem 10.</p>
+            <button class="choose-button" data-pdf="fichas/ficha_personagem10.pdf">Escolher</button>
+        </div>
+        <div class="character-card" data-id="11">
+            <h2>Personagem 11</h2>
+            <img src="imgs/personagem11.jpg" alt="Personagem 11">
+            <h3>Nome do Personagem 11</h3>
+            <p>Uma breve descrição do Personagem 11.</p>
+            <button class="choose-button" data-pdf="fichas/ficha_personagem11.pdf">Escolher</button>
+        </div>
+        <div class="character-card" data-id="12">
+            <h2>Personagem 12</h2>
+            <img src="imgs/personagem12.jpg" alt="Personagem 12">
+            <h3>Nome do Personagem 12</h3>
+            <p>Uma breve descrição do Personagem 12.</p>
+            <button class="choose-button" data-pdf="fichas/ficha_personagem12.pdf">Escolher</button>
+        </div>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const buttons = document.querySelectorAll('.choose-button');
+            const chosenCharacters = JSON.parse(localStorage.getItem('chosenCharacters')) || {};
+
+            // Função para atualizar o estado do botão
+            const updateButtonState = (button, characterId) => {
+                if (chosenCharacters[characterId]) {
+                    button.textContent = 'Já escolhido';
+                    button.disabled = true;
+                    button.style.backgroundColor = '#757575'; // Cor desativada
+                } else {
+                    button.textContent = 'Escolher';
+                    button.disabled = false;
+                    button.style.backgroundColor = '#4caf50'; // Cor padrão
+                }
+            };
+
+            // Carregar estado inicial dos botões
+            buttons.forEach(button => {
+                const card = button.closest('.character-card');
+                const characterId = card.dataset.id;
+                updateButtonState(button, characterId);
+            });
+
+            // Adicionar event listeners aos botões
+            buttons.forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const card = event.target.closest('.character-card');
+                    const characterId = card.dataset.id;
+                    const pdfPath = event.target.dataset.pdf;
+
+                    if (!chosenCharacters[characterId]) {
+                        chosenCharacters[characterId] = true;
+                        localStorage.setItem('chosenCharacters', JSON.stringify(chosenCharacters));
+                        updateButtonState(event.target, characterId);
+
+                        // Iniciar download do PDF
+                        const a = document.createElement('a');
+                        a.href = pdfPath;
+                        a.download = pdfPath.split('/').pop(); // Extrai o nome do arquivo do caminho
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                    }
+                });
+            });
+        });
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1a1a1a; /* Cor de fundo escura */
+            color: #f0f0f0; /* Cor do texto claro */
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            color: #00bcd4; /* Cor de destaque para o título */
+        }
+
+        #character-selection {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            justify-content: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .character-card {
+            background-color: #2c2c2c; /* Fundo do card mais escuro */
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .character-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .character-card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+
+        .character-card h2 {
+            color: #ffeb3b; /* Cor de destaque para o nome do personagem */
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .choose-button {
+            background-color: #4caf50; /* Cor do botão primário */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.2s;
+        }
+
+        .choose-button:hover:not(:disabled) {
+            background-color: #43a047;
+        }
+
+        .choose-button:disabled {
+            background-color: #757575; /* Cor do botão desativado */
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 768px) {
+            #character-selection {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            #character-selection {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</body>
+</html>

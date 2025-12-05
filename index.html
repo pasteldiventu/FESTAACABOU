@@ -20,12 +20,87 @@
             padding: 20px; 
             line-height: 1.6;
             min-height: 100vh;
+            overflow-x: hidden; /* Evita rolagem horizontal */
         }
+
+        /* --- TELA DE BLOQUEIO (LOCK SCREEN) --- */
+        #lock-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #050505;
+            z-index: 9999; /* Fica acima de tudo */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background-image: radial-gradient(circle at center, #1a1a2e 0%, #000 100%);
+            transition: opacity 1s ease-out, visibility 1s ease-out;
+        }
+
+        /* Classe para esconder a tela quando o tempo acabar */
+        #lock-screen.unlocked {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .lock-content h1 {
+            color: #ff00de;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            animation: flicker 2s infinite;
+        }
+
+        .lock-content p {
+            color: #00d2ff;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+
+        #timer {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .time-unit {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #333;
+            min-width: 100px;
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.1);
+        }
+
+        .time-unit span {
+            display: block;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            font-weight: 900;
+            color: #fff;
+            text-shadow: 0 0 10px #00d2ff;
+        }
+
+        .time-unit label {
+            font-size: 0.8rem;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- ESTILOS ORIGINAIS --- */
 
         header { text-align: center; margin-bottom: 50px; padding: 10px; }
         
-        /* TÍTULOS NEON */
-        h1 { 
+        h1.main-title { 
             font-family: 'Orbitron', sans-serif; 
             color: #fff; 
             font-size: 2rem; 
@@ -35,7 +110,7 @@
                 0 0 5px #00d2ff,
                 0 0 10px #00d2ff,
                 0 0 20px #00d2ff,
-                0 0 40px #00d2ff; /* Brilho Ciano */
+                0 0 40px #00d2ff;
             animation: flicker 3s infinite alternate;
         }
 
@@ -74,7 +149,6 @@
             backdrop-filter: blur(5px);
         }
 
-        /* Efeito Hover no Card (Brilho Rosa/Roxo) */
         .character-card:hover { 
             transform: translateY(-8px) scale(1.02); 
             border-color: #ff00de;
@@ -90,7 +164,7 @@
             border-radius: 10px; 
             margin-bottom: 15px; 
             border: 1px solid #444;
-            filter: grayscale(20%); /* Um pouco desbotado pra dar vibe retro */
+            filter: grayscale(20%);
             transition: filter 0.3s;
         }
 
@@ -132,7 +206,7 @@
             color: white; 
             border: none; 
             padding: 15px 20px; 
-            border-radius: 50px; /* Redondinho */
+            border-radius: 50px;
             cursor: pointer; 
             font-family: 'Orbitron', sans-serif;
             font-size: 1rem; 
@@ -153,7 +227,6 @@
             transform: scale(0.95); 
         }
 
-        /* Botão JÁ ESCOLHIDO (Cinza/Desativado) */
         .choose-button:disabled { 
             background: #222 !important; 
             color: #555 !important; 
@@ -162,7 +235,7 @@
             box-shadow: none;
         }
 
-        /* --- MODAL DE CONFIRMAÇÃO (FUTURISTA) --- */
+        /* MODAL */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-color: rgba(0, 0, 0, 0.9); 
@@ -186,7 +259,6 @@
             overflow: hidden;
         }
         
-        /* Linha de "scan" decorativa no modal */
         .modal-box::before {
             content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 5px;
             background: rgba(0, 210, 255, 0.5);
@@ -249,7 +321,7 @@
         }
 
         @media (min-width: 768px) {
-            h1 { font-size: 3.5rem; }
+            h1.main-title { font-size: 3.5rem; }
             .character-card img { height: 450px; }
             body { padding: 40px; }
         }
@@ -257,8 +329,34 @@
 </head>
 <body>
 
+    <div id="lock-screen">
+        <div class="lock-content">
+            <h1>SISTEMA BLOQUEADO</h1>
+            <p>Protocolos de segurança ativos até:</p>
+            
+            <div id="timer">
+                <div class="time-unit">
+                    <span id="days">00</span>
+                    <label>Dias</label>
+                </div>
+                <div class="time-unit">
+                    <span id="hours">00</span>
+                    <label>Horas</label>
+                </div>
+                <div class="time-unit">
+                    <span id="minutes">00</span>
+                    <label>Min</label>
+                </div>
+                <div class="time-unit">
+                    <span id="seconds">00</span>
+                    <label>Seg</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <header>
-        <h1>Uma Festa de matar!</h1>
+        <h1 class="main-title">Uma Festa de matar!</h1>
         <h2 class="subtitle">Escolha seu personagem sabiamente, não vale pegar o que alguém já pegou hein!</h2>
     </header>
 
@@ -393,7 +491,48 @@
         }
         const db = firebase.database();
 
+        // --- LÓGICA DO CRONÔMETRO DE BLOQUEIO ---
+        function startCountdown() {
+            const lockScreen = document.getElementById('lock-screen');
+            const dayEl = document.getElementById('days');
+            const hourEl = document.getElementById('hours');
+            const minEl = document.getElementById('minutes');
+            const secEl = document.getElementById('seconds');
+
+            // DATA ALVO: 05 de Dezembro de 2025 às 18:00
+            const targetDate = new Date('2025-12-06T18:00:00').getTime();
+
+            const interval = setInterval(() => {
+                const now = new Date().getTime();
+                const distance = targetDate - now;
+
+                if (distance < 0) {
+                    // Tempo acabou: libera o site
+                    clearInterval(interval);
+                    lockScreen.classList.add('unlocked');
+                    document.body.style.overflow = 'auto'; // Reabilita scroll
+                    return;
+                }
+
+                // Cálculos de tempo
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                // Atualiza HTML com zero à esquerda
+                dayEl.innerText = days < 10 ? '0' + days : days;
+                hourEl.innerText = hours < 10 ? '0' + hours : hours;
+                minEl.innerText = minutes < 10 ? '0' + minutes : minutes;
+                secEl.innerText = seconds < 10 ? '0' + seconds : seconds;
+
+            }, 1000);
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
+            // Inicia o cronômetro
+            startCountdown();
+
             const buttons = document.querySelectorAll('.choose-button');
             
             // Elementos do Modal
@@ -432,7 +571,7 @@
                     const data = snapshot.val();
                     if (data && data.escolhido === true) {
                         setButtonState(button, true);
-                        card.style.opacity = "0.5"; // Deixa card meio apagado se já foi
+                        card.style.opacity = "0.5"; 
                         card.style.borderColor = "#333";
                         card.style.boxShadow = "none";
                     } else {

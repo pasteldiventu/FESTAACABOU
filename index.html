@@ -6,147 +6,31 @@
     <title>Escolha seu Personagem - Festa do Jp</title>
     
     <style>
-        /* RESET E GERAL */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #1a1a1a;
-            color: #f0f0f0;
-            padding: 15px;
-            line-height: 1.6;
-        }
-
-        /* HEADER */
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-            padding: 10px;
-        }
-
-        h1 {
-            color: #00bcd4;
-            font-size: 1.8rem; /* Tamanho bom para mobile */
-            margin-bottom: 10px;
-        }
-
-        h2.subtitle {
-            font-size: 1rem;
-            color: #ccc;
-            font-weight: normal;
-        }
-
-        /* GRID SYSTEM */
-        #character-selection {
-            display: grid;
-            /* Cria colunas que se adaptam. Mínimo de 280px (bom para celulares) */
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding-bottom: 40px;
-        }
-
-        /* CARDS */
-        .character-card {
-            background-color: #2c2c2c;
-            border-radius: 12px;
-            padding: 15px;
-            text-align: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s;
-            
-            /* Flexbox para garantir que o botão fique sempre no final, alinhado */
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .character-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-        }
-
-        /* IMAGENS RESPONSIVAS */
-        .character-card img {
-            width: 100%;
-            height: 420px; /* Altura reduzida para mobile */
-            object-fit: cover; /* Corta a imagem sem distorcer */
-            object-position: top center; /* Foca no rosto */
-            border-radius: 8px;
-            margin-bottom: 15px;
-        }
-
-        /* TIPOGRAFIA DO CARD */
-        .character-card h2 {
-            color: #ffeb3b;
-            font-size: 1.4rem;
-            margin-bottom: 5px;
-        }
-
-        .character-card h3 {
-            font-size: 0.95rem;
-            color: #00bcd4;
-            margin-bottom: 10px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .character-card p {
-            font-style: italic;
-            color: #bbb;
-            margin-bottom: 20px;
-            font-size: 0.9rem;
-            flex-grow: 1; /* Empurra o botão para baixo */
-        }
-
+        /* --- CSS (ESTILO VISUAL) --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #1a1a1a; color: #f0f0f0; padding: 15px; line-height: 1.6; }
+        header { text-align: center; margin-bottom: 30px; padding: 10px; }
+        h1 { color: #00bcd4; font-size: 1.8rem; margin-bottom: 10px; }
+        h2.subtitle { font-size: 1rem; color: #ccc; font-weight: normal; }
+        #character-selection { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; padding-bottom: 40px; }
+        .character-card { background-color: #2c2c2c; border-radius: 12px; padding: 15px; text-align: center; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); transition: transform 0.2s ease-in-out, box-shadow 0.2s; display: flex; flex-direction: column; justify-content: space-between; }
+        .character-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5); }
+        .character-card img { width: 100%; height: 420px; object-fit: cover; object-position: top center; border-radius: 8px; margin-bottom: 15px; }
+        .character-card h2 { color: #ffeb3b; font-size: 1.4rem; margin-bottom: 5px; }
+        .character-card h3 { font-size: 0.95rem; color: #00bcd4; margin-bottom: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+        .character-card p { font-style: italic; color: #bbb; margin-bottom: 20px; font-size: 0.9rem; flex-grow: 1; }
+        
         /* BOTÕES */
-        .choose-button {
-            background-color: #4caf50;
-            color: white;
-            border: none;
-            padding: 15px 20px; /* Padding maior para toque */
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: bold;
-            width: 100%; /* Botão ocupa largura total */
-            transition: background-color 0.2s, transform 0.1s;
-        }
+        .choose-button { background-color: #4caf50; color: white; border: none; padding: 15px 20px; border-radius: 8px; cursor: pointer; font-size: 1rem; font-weight: bold; width: 100%; transition: background-color 0.2s, transform 0.1s; }
+        .choose-button:hover:not(:disabled) { background-color: #43a047; }
+        .choose-button:active:not(:disabled) { transform: scale(0.98); }
+        /* Estilo para botão JÁ ESCOLHIDO (Cinza) */
+        .choose-button:disabled { background-color: #555 !important; color: #aaa !important; cursor: not-allowed; border: 1px solid #444; }
 
-        .choose-button:hover:not(:disabled) {
-            background-color: #43a047;
-        }
-
-        .choose-button:active:not(:disabled) {
-            transform: scale(0.98);
-        }
-
-        .choose-button:disabled {
-            background-color: #555;
-            color: #888;
-            cursor: not-allowed;
-            border: 1px solid #444;
-        }
-
-        /* BREAKPOINTS (AJUSTES PARA TABLET E PC) */
         @media (min-width: 768px) {
-            h1 {
-                font-size: 2.5rem;
-            }
-
-            .character-card img {
-                height: 400px; /* Imagem fica grande no PC */
-            }
-
-            body {
-                padding: 40px;
-            }
+            h1 { font-size: 2.5rem; }
+            .character-card img { height: 450px; }
+            body { padding: 40px; }
         }
     </style>
 </head>
@@ -257,56 +141,79 @@
 
     </main>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Seleciona todos os botões
-            const buttons = document.querySelectorAll('.choose-button');
-            
-            // Carrega o estado atual do localStorage (ou cria objeto vazio se não existir)
-            const chosenCharacters = JSON.parse(localStorage.getItem('chosenCharacters')) || {};
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
-            // Função para atualizar a aparência do botão
-            const updateButtonState = (button, characterId) => {
-                if (chosenCharacters[characterId]) {
-                    button.textContent = 'JÁ ESCOLHIDO';
-                    button.disabled = true;
-                    // O estilo cinza já é aplicado pelo CSS :disabled
+    <script>
+        // --- SUAS CONFIGURAÇÕES REAIS ---
+        const firebaseConfig = {
+            apiKey: "AIzaSyDSCGoUN1ZKYTUi3cpoc4dI1fPZavu3xhI",
+            authDomain: "afestaacabou-6b2f7.firebaseapp.com",
+            databaseURL: "https://afestaacabou-6b2f7-default-rtdb.firebaseio.com",
+            projectId: "afestaacabou-6b2f7",
+            storageBucket: "afestaacabou-6b2f7.firebasestorage.app",
+            messagingSenderId: "47826000216",
+            appId: "1:47826000216:web:ff3028fb5333e48e24ad2d"
+        };
+
+        // Inicializa o Firebase
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        const db = firebase.database();
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const buttons = document.querySelectorAll('.choose-button');
+
+            const setButtonState = (btn, isTaken) => {
+                if (isTaken) {
+                    btn.textContent = 'JÁ ESCOLHIDO';
+                    btn.disabled = true;
                 } else {
-                    button.textContent = 'ESCOLHER';
-                    button.disabled = false;
+                    btn.textContent = 'ESCOLHER';
+                    btn.disabled = false;
                 }
             };
 
-            // Inicialização: percorre todos os botões e aplica o estado correto ao carregar a página
             buttons.forEach(button => {
                 const card = button.closest('.character-card');
-                const characterId = card.dataset.id;
-                
-                // Atualiza visual inicial
-                updateButtonState(button, characterId);
+                const charId = card.dataset.id;
+                const charRef = db.ref('personagens/' + charId);
 
-                // Adiciona o evento de clique
+                // 1. OUVINTE EM TEMPO REAL (Atualiza sozinho)
+                charRef.on('value', (snapshot) => {
+                    const data = snapshot.val();
+                    if (data && data.escolhido === true) {
+                        setButtonState(button, true);
+                    } else {
+                        setButtonState(button, false);
+                    }
+                });
+
+                // 2. CLIQUE PARA ESCOLHER
                 button.addEventListener('click', (event) => {
                     const pdfPath = event.target.dataset.pdf;
 
-                    // Se ainda não foi escolhido (dupla verificação)
-                    if (!chosenCharacters[characterId]) {
-                        
-                        // 1. Marca como escolhido no objeto e salva no LocalStorage
-                        chosenCharacters[characterId] = true;
-                        localStorage.setItem('chosenCharacters', JSON.stringify(chosenCharacters));
-                        
-                        // 2. Atualiza o botão visualmente
-                        updateButtonState(event.target, characterId);
-
-                        // 3. Força o download do PDF
-                        const link = document.createElement('a');
-                        link.href = pdfPath;
-                        link.download = pdfPath.split('/').pop(); // Pega o nome do arquivo
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
-                    }
+                    charRef.transaction((currentData) => {
+                        if (currentData && currentData.escolhido) {
+                            return; // Já era, aborta!
+                        }
+                        return { escolhido: true }; // Marca como meu
+                    }, (error, committed, snapshot) => {
+                        if (error) {
+                            alert('Erro de conexão com o banco de dados!');
+                        } else if (!committed) {
+                            alert('Putz! Alguém clicou milissegundos antes de você!');
+                        } else {
+                            alert('Personagem garantido! Baixando ficha...');
+                            const link = document.createElement('a');
+                            link.href = pdfPath;
+                            link.download = pdfPath.split('/').pop();
+                            document.body.appendChild(link);
+                            link.click();
+                            document.body.removeChild(link);
+                        }
+                    });
                 });
             });
         });

@@ -5,30 +5,251 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Escolha seu Personagem - Festa do Jp</title>
     
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Raleway:wght@300;400;700&display=swap" rel="stylesheet">
+
     <style>
-        /* --- CSS (ESTILO VISUAL) --- */
+        /* --- CSS (ESTILO VISUAL RETRO NEON) --- */
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #1a1a1a; color: #f0f0f0; padding: 15px; line-height: 1.6; }
-        header { text-align: center; margin-bottom: 30px; padding: 10px; }
-        h1 { color: #00bcd4; font-size: 1.8rem; margin-bottom: 10px; }
-        h2.subtitle { font-size: 1rem; color: #ccc; font-weight: normal; }
-        #character-selection { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; padding-bottom: 40px; }
-        .character-card { background-color: #2c2c2c; border-radius: 12px; padding: 15px; text-align: center; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); transition: transform 0.2s ease-in-out, box-shadow 0.2s; display: flex; flex-direction: column; justify-content: space-between; }
-        .character-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5); }
-        .character-card img { width: 100%; height: 420px; object-fit: cover; object-position: top center; border-radius: 8px; margin-bottom: 15px; }
-        .character-card h2 { color: #ffeb3b; font-size: 1.4rem; margin-bottom: 5px; }
-        .character-card h3 { font-size: 0.95rem; color: #00bcd4; margin-bottom: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
-        .character-card p { font-style: italic; color: #bbb; margin-bottom: 20px; font-size: 0.9rem; flex-grow: 1; }
         
-        /* BOTÕES */
-        .choose-button { background-color: #4caf50; color: white; border: none; padding: 15px 20px; border-radius: 8px; cursor: pointer; font-size: 1rem; font-weight: bold; width: 100%; transition: background-color 0.2s, transform 0.1s; }
-        .choose-button:hover:not(:disabled) { background-color: #43a047; }
-        .choose-button:active:not(:disabled) { transform: scale(0.98); }
-        /* Estilo para botão JÁ ESCOLHIDO (Cinza) */
-        .choose-button:disabled { background-color: #555 !important; color: #aaa !important; cursor: not-allowed; border: 1px solid #444; }
+        body { 
+            font-family: 'Raleway', sans-serif; 
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); /* Gradiente Roxo Dark */
+            color: #f0f0f0; 
+            padding: 20px; 
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        header { text-align: center; margin-bottom: 50px; padding: 10px; }
+        
+        /* TÍTULOS NEON */
+        h1 { 
+            font-family: 'Orbitron', sans-serif; 
+            color: #fff; 
+            font-size: 2rem; 
+            margin-bottom: 15px; 
+            text-transform: uppercase;
+            text-shadow: 
+                0 0 5px #00d2ff,
+                0 0 10px #00d2ff,
+                0 0 20px #00d2ff,
+                0 0 40px #00d2ff; /* Brilho Ciano */
+            animation: flicker 3s infinite alternate;
+        }
+
+        h2.subtitle { 
+            font-family: 'Raleway', sans-serif;
+            font-size: 1.1rem; 
+            color: #d1d1d1; 
+            font-weight: bold; 
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 2px #000;
+        }
+
+        /* GRID DOS CARDS */
+        #character-selection { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 30px; 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            padding-bottom: 60px; 
+        }
+
+        /* CARD ESTILIZADO */
+        .character-card { 
+            background-color: rgba(20, 20, 20, 0.8); 
+            border: 2px solid #333;
+            border-radius: 15px; 
+            padding: 15px; 
+            text-align: center; 
+            box-shadow: 0 0 15px rgba(0,0,0,0.8); 
+            transition: all 0.3s ease; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: space-between; 
+            position: relative;
+            backdrop-filter: blur(5px);
+        }
+
+        /* Efeito Hover no Card (Brilho Rosa/Roxo) */
+        .character-card:hover { 
+            transform: translateY(-8px) scale(1.02); 
+            border-color: #ff00de;
+            box-shadow: 0 0 20px #ff00de, inset 0 0 10px rgba(255, 0, 222, 0.2);
+            z-index: 10;
+        }
+
+        .character-card img { 
+            width: 100%; 
+            height: 400px; 
+            object-fit: cover; 
+            object-position: top center; 
+            border-radius: 10px; 
+            margin-bottom: 15px; 
+            border: 1px solid #444;
+            filter: grayscale(20%); /* Um pouco desbotado pra dar vibe retro */
+            transition: filter 0.3s;
+        }
+
+        .character-card:hover img {
+            filter: grayscale(0%) contrast(1.1);
+        }
+
+        .character-card h2 { 
+            font-family: 'Orbitron', sans-serif;
+            color: #ffeb3b; 
+            font-size: 1.5rem; 
+            margin-bottom: 5px; 
+            text-shadow: 0 0 5px rgba(255, 235, 59, 0.5);
+        }
+
+        .character-card h3 { 
+            font-size: 0.9rem; 
+            color: #00d2ff; 
+            margin-bottom: 12px; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            letter-spacing: 2px; 
+        }
+
+        .character-card p { 
+            font-style: italic; 
+            color: #e0e0e0; 
+            margin-bottom: 25px; 
+            font-size: 0.95rem; 
+            flex-grow: 1; 
+            background: rgba(0,0,0,0.3);
+            padding: 10px;
+            border-radius: 5px;
+        }
+        
+        /* BOTÕES ESTILOSOS */
+        .choose-button { 
+            background: linear-gradient(90deg, #ff00de, #be00ff);
+            color: white; 
+            border: none; 
+            padding: 15px 20px; 
+            border-radius: 50px; /* Redondinho */
+            cursor: pointer; 
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem; 
+            font-weight: bold; 
+            width: 100%; 
+            transition: all 0.3s; 
+            text-transform: uppercase;
+            box-shadow: 0 4px 15px rgba(190, 0, 255, 0.4);
+        }
+
+        .choose-button:hover:not(:disabled) { 
+            background: linear-gradient(90deg, #be00ff, #ff00de);
+            box-shadow: 0 0 25px #ff00de;
+            letter-spacing: 2px;
+        }
+
+        .choose-button:active:not(:disabled) { 
+            transform: scale(0.95); 
+        }
+
+        /* Botão JÁ ESCOLHIDO (Cinza/Desativado) */
+        .choose-button:disabled { 
+            background: #222 !important; 
+            color: #555 !important; 
+            cursor: not-allowed; 
+            border: 1px solid #333; 
+            box-shadow: none;
+        }
+
+        /* --- MODAL DE CONFIRMAÇÃO (FUTURISTA) --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.9); 
+            display: flex; justify-content: center; align-items: center;
+            z-index: 1000;
+            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+            backdrop-filter: blur(8px);
+        }
+        .modal-overlay.active { opacity: 1; pointer-events: all; }
+        
+        .modal-box {
+            background-color: #111; 
+            border: 2px solid #00d2ff;
+            padding: 40px; 
+            border-radius: 20px; 
+            text-align: center;
+            max-width: 90%; 
+            width: 450px; 
+            box-shadow: 0 0 30px rgba(0, 210, 255, 0.3), inset 0 0 20px rgba(0,0,0,0.8);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Linha de "scan" decorativa no modal */
+        .modal-box::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 5px;
+            background: rgba(0, 210, 255, 0.5);
+            animation: scanline 2s linear infinite;
+        }
+
+        .modal-box h3 { 
+            color: #fff; 
+            margin-bottom: 20px; 
+            font-size: 1.5rem; 
+            font-family: 'Orbitron', sans-serif; 
+            text-transform: uppercase;
+        }
+
+        .modal-box p { color: #bbb; margin-bottom: 30px; font-size: 1.1rem; }
+        
+        .modal-box strong { 
+            color: #ff00de; 
+            display: block; 
+            font-size: 1.8rem; 
+            margin-top: 10px; 
+            text-shadow: 0 0 10px #ff00de;
+            font-family: 'Orbitron', sans-serif; 
+        }
+        
+        .modal-actions { display: flex; gap: 20px; justify-content: center; }
+        
+        .modal-btn { 
+            padding: 15px 30px; 
+            border: none; 
+            border-radius: 8px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            font-size: 1rem; 
+            flex: 1; 
+            font-family: 'Orbitron', sans-serif;
+            transition: 0.2s;
+        }
+
+        .btn-confirm { 
+            background-color: #00d2ff; color: #000; 
+            box-shadow: 0 0 15px #00d2ff;
+        }
+        .btn-confirm:hover { background-color: #fff; box-shadow: 0 0 25px #fff; }
+
+        .btn-cancel { 
+            background-color: transparent; color: #ff4444; border: 2px solid #ff4444; 
+        }
+        .btn-cancel:hover { background-color: #ff4444; color: #fff; box-shadow: 0 0 15px #ff4444; }
+
+        /* ANIMAÇÕES */
+        @keyframes flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; text-shadow: 0 0 10px #00d2ff, 0 0 20px #00d2ff; }
+            20%, 24%, 55% { opacity: 0.5; text-shadow: none; }
+        }
+
+        @keyframes scanline {
+            0% { top: -10%; }
+            100% { top: 110%; }
+        }
 
         @media (min-width: 768px) {
-            h1 { font-size: 2.5rem; }
+            h1 { font-size: 3.5rem; }
             .character-card img { height: 450px; }
             body { padding: 40px; }
         }
@@ -37,12 +258,11 @@
 <body>
 
     <header>
-        <h1>Confirme sua presença na maior festa da cidade!!</h1>
-        <h2 class="subtitle">Escolha seu personagem sabiamente, não vale pegar o que alguém já pegou hein - Jp</h2>
+        <h1>Uma Festa de matar!</h1>
+        <h2 class="subtitle">Escolha seu personagem sabiamente, não vale pegar o que alguém já pegou hein!</h2>
     </header>
 
     <main id="character-selection">
-        
         <div class="character-card" data-id="1">
             <h2>Gary Amaral</h2>
             <img src="imgs/personagem1.jpg" alt="Personagem 1">
@@ -141,11 +361,23 @@
 
     </main>
 
+    <div id="confirmation-modal" class="modal-overlay">
+        <div class="modal-box">
+            <h3>SYSTEM ALERT</h3>
+            <p>Confirme a seleção do alvo:</p>
+            <strong id="modal-char-name">Nome do Personagem</strong>
+            <br>
+            <div class="modal-actions">
+                <button id="btn-cancel" class="modal-btn btn-cancel">CANCELAR</button>
+                <button id="btn-confirm" class="modal-btn btn-confirm">CONFIRMAR</button>
+            </div>
+        </div>
+    </div>
+
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
     <script>
-        // --- SUAS CONFIGURAÇÕES REAIS ---
         const firebaseConfig = {
             apiKey: "AIzaSyDSCGoUN1ZKYTUi3cpoc4dI1fPZavu3xhI",
             authDomain: "afestaacabou-6b2f7.firebaseapp.com",
@@ -156,7 +388,6 @@
             appId: "1:47826000216:web:ff3028fb5333e48e24ad2d"
         };
 
-        // Inicializa o Firebase
         if (!firebase.apps.length) {
             firebase.initializeApp(firebaseConfig);
         }
@@ -164,56 +395,94 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             const buttons = document.querySelectorAll('.choose-button');
+            
+            // Elementos do Modal
+            const modal = document.getElementById('confirmation-modal');
+            const modalCharName = document.getElementById('modal-char-name');
+            const btnConfirm = document.getElementById('btn-confirm');
+            const btnCancel = document.getElementById('btn-cancel');
 
+            // Variáveis temporárias
+            let pendingSelection = {
+                ref: null,
+                pdfPath: '',
+                buttonElement: null
+            };
+
+            // Função visual para desativar botão
             const setButtonState = (btn, isTaken) => {
                 if (isTaken) {
-                    btn.textContent = 'JÁ ESCOLHIDO';
+                    btn.textContent = 'BLOQUEADO';
                     btn.disabled = true;
                 } else {
-                    btn.textContent = 'ESCOLHER';
+                    btn.textContent = 'SELECIONAR';
                     btn.disabled = false;
                 }
             };
 
+            // Configura cada carta
             buttons.forEach(button => {
                 const card = button.closest('.character-card');
                 const charId = card.dataset.id;
                 const charRef = db.ref('personagens/' + charId);
+                const charName = card.querySelector('h2').innerText;
 
-                // 1. OUVINTE EM TEMPO REAL (Atualiza sozinho)
+                // 1. OUVINTE EM TEMPO REAL
                 charRef.on('value', (snapshot) => {
                     const data = snapshot.val();
                     if (data && data.escolhido === true) {
                         setButtonState(button, true);
+                        card.style.opacity = "0.5"; // Deixa card meio apagado se já foi
+                        card.style.borderColor = "#333";
+                        card.style.boxShadow = "none";
                     } else {
                         setButtonState(button, false);
+                        card.style.opacity = "1";
                     }
                 });
 
-                // 2. CLIQUE PARA ESCOLHER
+                // 2. CLIQUE NO "ESCOLHER" -> ABRE O MODAL
                 button.addEventListener('click', (event) => {
-                    const pdfPath = event.target.dataset.pdf;
+                    pendingSelection.ref = charRef;
+                    pendingSelection.pdfPath = event.target.dataset.pdf;
+                    pendingSelection.buttonElement = button;
+                    
+                    modalCharName.textContent = charName;
+                    modal.classList.add('active');
+                });
+            });
 
-                    charRef.transaction((currentData) => {
-                        if (currentData && currentData.escolhido) {
-                            return; // Já era, aborta!
-                        }
-                        return { escolhido: true }; // Marca como meu
-                    }, (error, committed, snapshot) => {
-                        if (error) {
-                            alert('Erro de conexão com o banco de dados!');
-                        } else if (!committed) {
-                            alert('Putz! Alguém clicou milissegundos antes de você!');
-                        } else {
-                            alert('Personagem garantido! Baixando ficha...');
-                            const link = document.createElement('a');
-                            link.href = pdfPath;
-                            link.download = pdfPath.split('/').pop();
-                            document.body.appendChild(link);
-                            link.click();
-                            document.body.removeChild(link);
-                        }
-                    });
+            // 3. LÓGICA DO MODAL
+            btnCancel.addEventListener('click', () => {
+                modal.classList.remove('active');
+                pendingSelection = { ref: null, pdfPath: '', buttonElement: null }; 
+            });
+
+            btnConfirm.addEventListener('click', () => {
+                if (!pendingSelection.ref) return;
+
+                const { ref, pdfPath } = pendingSelection;
+                modal.classList.remove('active');
+
+                ref.transaction((currentData) => {
+                    if (currentData && currentData.escolhido) {
+                        return; 
+                    }
+                    return { escolhido: true }; 
+                }, (error, committed, snapshot) => {
+                    if (error) {
+                        alert('ERRO DE SISTEMA: Conexão falhou!');
+                    } else if (!committed) {
+                        alert('ALERTA: Alvo já capturado por outro usuário!');
+                    } else {
+                        alert('SUCESSO: Personagem vinculado! Baixando dados...');
+                        const link = document.createElement('a');
+                        link.href = pdfPath;
+                        link.download = pdfPath.split('/').pop();
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                    }
                 });
             });
         });
